@@ -1,0 +1,940 @@
+        -:    0:Source:D:/C++/Lab_2_QM/main.cpp
+        -:    0:Graph:D:\C++\Lab_2_QM\cmake-build-debug-coverage\CMakeFiles\Lab_2_QM.dir\main.cpp.gcno
+        -:    0:Data:D:\C++\Lab_2_QM\cmake-build-debug-coverage\CMakeFiles\Lab_2_QM.dir\main.cpp.gcda
+        -:    0:Runs:1
+        -:    1:#include <iostream>
+        -:    2:#include <valarray>
+        -:    3:#include <chrono>
+        -:    4:
+        -:    5:using namespace std;
+        -:    6:using real = double;
+        -:    7:const int n = 1500;
+        -:    8:const int m = 5;// номер  в группе
+        -:    9:const int k = 1;// номер группы
+        -:   10://double A[n][n] ;// исходная матрица
+        -:   11://double X[n][1];//точное решение
+        -:   12:real *A;// исходная матрица
+        -:   13:real *X;//точное решение
+        -:   14:real *B;
+        -:   15:
+        -:   16:// метод для заполнения симметричной матрицы
+function _Z23FillMatrixSymmetricallyRPdii called 1 returned 100% blocks executed 97%
+        1:   17:void FillMatrixSymmetrically(real *&A, int n, int k) {
+       1*:   18:    A = new real[n * n];
+        1:   18-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   18-block  1
+    %%%%%:   18-block  2
+call    2 never executed
+        1:   18-block  3
+call    3 returned 1
+     1501:   19:    for (int i = 0; i < n; i++) {
+     1500:   19-block  0
+     1501:   19-block  1
+branch  0 taken 1500
+branch  1 taken 1 (fallthrough)
+  1125750:   20:        for (int j = 0; j < i; j++) {
+     1500:   20-block  0
+  1125750:   20-block  1
+branch  0 taken 1124250
+branch  1 taken 1500 (fallthrough)
+        -:   21:           // int random = rand() % 1001 - 1000;// Генерируем случайное число от -1000  до 0
+        -:   22:
+  1124250:   23:            A[i * n + j] =  (double)rand() / RAND_MAX * -1000.0f;
+  1124250:   23-block  0
+call    0 returned 1124250
+        -:   24:        }
+        -:   25:    }
+     1501:   26:    for (int i = 0; i < n; i++) {
+        1:   26-block  0
+     1500:   26-block  1
+     1501:   26-block  2
+branch  0 taken 1500
+branch  1 taken 1 (fallthrough)
+  1125750:   27:        for (int j = i + 1; j < n; j++) {
+     1500:   27-block  0
+  1125750:   27-block  1
+branch  0 taken 1124250
+branch  1 taken 1500 (fallthrough)
+  1124250:   28:            A[i * n + j] = A[j * n + i];
+  1124250:   28-block  0
+        -:   29:        }
+        -:   30:    }
+     1501:   31:    for (int i = 0; i < n; i++) {
+        1:   31-block  0
+     1500:   31-block  1
+     1501:   31-block  2
+branch  0 taken 1500
+branch  1 taken 1 (fallthrough)
+     1500:   32:        if (i == 0) {
+     1500:   32-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 1499
+        1:   33:            real sum = 0;
+        1:   34:            int j = 1;
+     1500:   35:            while (j != n) {
+        1:   35-block  0
+     1500:   35-block  1
+branch  0 taken 1499
+branch  1 taken 1 (fallthrough)
+     1499:   36:                double a = A[i * n + j];
+     1499:   37:                sum -= A[i * n + j];
+     1499:   38:                j++;
+     1499:   38-block  0
+        -:   39:            }
+        1:   40:            A[0] = sum + pow(10, 2 - k);
+        1:   40-block  0
+call    0 returned 1
+        -:   41:        } else {
+     1499:   42:            real sum = 0;
+     1499:   43:            int j = 0;
+  2249999:   44:            while (j != n) {
+     1499:   44-block  0
+  2249999:   44-block  1
+branch  0 taken 2248500
+branch  1 taken 1499 (fallthrough)
+  2248500:   45:                if (j != i) {
+  2248500:   45-block  0
+branch  0 taken 2247001 (fallthrough)
+branch  1 taken 1499
+  2247001:   46:                    double a = A[i * n + j];
+  2247001:   47:                    sum -= A[i * n + j];
+  2247001:   47-block  0
+        -:   48:                }
+  2248500:   49:                j++;
+  2248500:   49-block  0
+        -:   50:            }
+     1499:   51:            A[i * n + i] = sum;
+     1499:   51-block  0
+        -:   52:        }
+        -:   53:    }
+        1:   54:}
+        -:   55:
+function _Z9A_to_LDLtRPdi called 1 returned 100% blocks executed 93%
+        1:   56:void A_to_LDLt(real *&A, int n) {
+       1*:   57:    real *D = new real[n];
+        1:   57-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   57-block  1
+    %%%%%:   57-block  2
+call    2 never executed
+        1:   57-block  3
+call    3 returned 1
+     1500:   58:    for (int i = 0; i < n - 1; ++i) {
+     1499:   58-block  0
+     1500:   58-block  1
+branch  0 taken 1499
+branch  1 taken 1 (fallthrough)
+  1125749:   59:        for (int j = i + 1; j < n; ++j) {
+     1499:   59-block  0
+  1124250:   59-block  1
+  1125749:   59-block  2
+branch  0 taken 1124250
+branch  1 taken 1499 (fallthrough)
+  1124250:   60:            double d = A[j * n + i];
+  1124250:   61:            D[j] = A[j * n + i];
+  1124250:   62:            double a = A[j * n + i] / A[i * n + i];
+  1124250:   63:            A[j * n + i] /= A[i * n + i];
+563624000:   64:            for (int k = i + 1; k <= j; ++k) {
+  1124250:   64-block  0
+563624000:   64-block  1
+branch  0 taken 562499750
+branch  1 taken 1124250 (fallthrough)
+562499750:   65:                double aa = A[j * n + k] - A[j * n + i] * D[k];
+562499750:   66:                A[j * n + k] -= A[j * n + i] * D[k];
+562499750:   66-block  0
+        -:   67:            }
+        -:   68:        }
+        -:   69:    }
+        1:   70:}
+        -:   71:
+        -:   72:// метод для заполнения точного решения
+function _Z5FillXRPdii called 1 returned 100% blocks executed 88%
+        1:   73:void FillX(real *&X, int n, int m) {
+       1*:   74:    X = new real[n];
+        1:   74-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   74-block  1
+    %%%%%:   74-block  2
+call    2 never executed
+        1:   74-block  3
+call    3 returned 1
+     1501:   75:    for (int i = 0; i < n; i++) {
+     1501:   75-block  0
+branch  0 taken 1500
+branch  1 taken 1 (fallthrough)
+     1500:   76:        X[i] = m;
+     1500:   77:        m++;
+     1500:   77-block  0
+        -:   78:    }
+        1:   79:}
+        -:   80:
+function _Z20MatrixMultiplicationRPdS_iiS_ii called 1 returned 100% blocks executed 93%
+        1:   81:void MatrixMultiplication(real *&B, real *A,
+        -:   82:                          int first_num_rows, int first_num_col,
+        -:   83:                          real *X,
+        -:   84:                          int second_num_rows, int second_num_col) {
+        -:   85:
+       1*:   86:    B = new real[first_num_rows /* *second_num_col*/];
+        1:   86-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   86-block  1
+    %%%%%:   86-block  2
+call    2 never executed
+        1:   86-block  3
+call    3 returned 1
+     1501:   87:    for (int i = 0; i < first_num_rows; i++) {
+     1500:   87-block  0
+     1501:   87-block  1
+branch  0 taken 1500
+branch  1 taken 1 (fallthrough)
+     3000:   88:        for (int j = 0; j < second_num_col; j++) {
+     1500:   88-block  0
+     3000:   88-block  1
+branch  0 taken 1500
+branch  1 taken 1500 (fallthrough)
+     1500:   89:            double elem = 0;
+  2251500:   90:            for (int k = 0; k < first_num_col; k++) {
+     1500:   90-block  0
+  2251500:   90-block  1
+branch  0 taken 2250000
+branch  1 taken 1500 (fallthrough)
+  2250000:   91:                double a = A[i * first_num_col + k];
+  2250000:   92:                double x = X[k * second_num_col + j];
+  2250000:   93:                elem += A[i * first_num_col + k] * X[k * second_num_col + j];
+  2250000:   93-block  0
+        -:   94:            }
+     1500:   95:            B[i/* *second_num_col+j*/] = elem;
+     1500:   95-block  0
+        -:   96:        }
+        -:   97:    }
+        -:   98:    // return B;
+        1:   99:}
+        -:  100:
+function _Z5FillYRPdS_S_i called 1 returned 100% blocks executed 93%
+        1:  101:real *FillY(real *&Y, real *A, real *B, int n) {
+       1*:  102:    Y = new real[n];
+        1:  102-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:  102-block  1
+    %%%%%:  102-block  2
+call    2 never executed
+        1:  102-block  3
+call    3 returned 1
+        1:  103:    double y = B[0];
+        1:  104:    Y[0] = B[0];
+     1500:  105:    for (int i = 1; i < n; i++) {
+     1500:  105-block  0
+branch  0 taken 1499
+branch  1 taken 1 (fallthrough)
+     1499:  106:        double b = B[i];
+     1499:  107:        real sum = B[i];
+  1125749:  108:        for (int k = 0; k <= i - 1; k++) {
+     1499:  108-block  0
+  1124250:  108-block  1
+  1125749:  108-block  2
+branch  0 taken 1124250
+branch  1 taken 1499 (fallthrough)
+  1124250:  109:            if (i > k) {
+  1124250:  109-block  0
+branch  0 taken 1124250 (fallthrough)
+branch  1 taken 0
+  1124250:  110:                double yy = Y[k];
+  1124250:  111:                double a = A[(i) * n + k];
+  1124250:  112:                sum -= Y[k] * A[(i) * n + k];
+  1124250:  112-block  0
+        -:  113:            }
+        -:  114:        }
+     1499:  115:        Y[i] = sum;
+     1499:  115-block  0
+        -:  116:    }
+        1:  117:    return Y;
+        1:  117-block  0
+        -:  118:}
+        -:  119:
+function _Z5FillZRPdS_S_i called 1 returned 100% blocks executed 89%
+        1:  120:real *FillZ(real *&Z, real *Y, real *A, int n) {
+       1*:  121:    Z = new real[n];
+        1:  121-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:  121-block  1
+    %%%%%:  121-block  2
+call    2 never executed
+        1:  121-block  3
+call    3 returned 1
+     1501:  122:    for (int i = 0; i < n; i++) {
+     1501:  122-block  0
+branch  0 taken 1500
+branch  1 taken 1 (fallthrough)
+     1500:  123:        double y = Y[i];
+     1500:  124:        double d = A[i * n + i];
+     1500:  125:        double z = Y[i] / A[i * n + i];
+     1500:  126:        Z[i] = Y[i] / A[i * n + i];
+     1500:  126-block  0
+        -:  127:    }
+        1:  128:    return Z;
+        1:  128-block  0
+        -:  129:}
+        -:  130:
+function _Z10FillX_findRPdS_S_i called 1 returned 100% blocks executed 92%
+        1:  131:real *FillX_find(real *&X, real *A, real *Z, int n) {
+       1*:  132:    X = new real[n];
+        1:  132-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:  132-block  1
+    %%%%%:  132-block  2
+call    2 never executed
+        1:  132-block  3
+call    3 returned 1
+        1:  133:    double zz = Z[n - 1];
+        1:  134:    X[n - 1] = Z[n - 1];
+        -:  135:
+     1500:  136:    for (int i = n - 2; i >= 0; i--) {
+     1500:  136-block  0
+branch  0 taken 1499
+branch  1 taken 1 (fallthrough)
+     1499:  137:        double z = Z[i];
+     1499:  138:        real sum = z;
+  1125749:  139:        for (int k = i + 1; k < n; k++) {
+     1499:  139-block  0
+  1124250:  139-block  1
+  1125749:  139-block  2
+branch  0 taken 1124250
+branch  1 taken 1499 (fallthrough)
+  1124250:  140:            if (k > i) {
+  1124250:  140-block  0
+branch  0 taken 1124250 (fallthrough)
+branch  1 taken 0
+  1124250:  141:                double a = A[k * n + i];
+  1124250:  142:                double x = X[k];
+  1124250:  143:                sum -= X[k] * A[k * n + i];
+  1124250:  143-block  0
+        -:  144:            }
+        -:  145:        }
+        -:  146:        //  double z=Z[i];
+     1499:  147:        X[i] = sum;
+     1499:  147-block  0
+        -:  148:    }
+        1:  149:}
+        -:  150:
+        -:  151:// Находит номер строки ведущего по столбцу
+function _Z21findRowOfLeadingByColPdii called 1499 returned 100% blocks executed 88%
+     1499:  152:int findRowOfLeadingByCol(real *A, int n, int colNum) {
+     1499:  153:    int row = colNum;
+     1499:  154:    int leading = A[colNum * n + colNum];
+  1125749:  155:    for (int i = colNum + 1; i < n; i++) {
+     1499:  155-block  0
+  1124250:  155-block  1
+  1125749:  155-block  2
+branch  0 taken 1124250
+branch  1 taken 1499 (fallthrough)
+  1124250:  156:        real nextElem = A[i * n + colNum];
+  1124250:  157:        if (abs(nextElem) > abs(leading)) {
+  1124250:  157-block  0
+call    0 returned 1124250
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1124250
+    #####:  158:            leading = nextElem;
+    #####:  159:            row = i;
+    %%%%%:  159-block  0
+        -:  160:        }
+        -:  161:    }
+        -:  162:
+     1499:  163:    return row;
+     1499:  163-block  0
+        -:  164:}
+        -:  165:
+        -:  166:// Обратный ход, используется формула (9) на с.3
+function _Z16goInReverseOrderPdS_S_i called 2 returned 100% blocks executed 100%
+        2:  167:void goInReverseOrder(real *A_copy, real *B_copy, real *X, int n) {
+        2:  168:    X[n - 1] = B_copy[n - 1] / A_copy[n * n - 1];
+     3000:  169:    for (int i = n - 2; i >= 0; i--) {
+        2:  169-block  0
+     3000:  169-block  1
+branch  0 taken 2998
+branch  1 taken 2 (fallthrough)
+        -:  170:        // Находим сумму, от a_i_(i+1) до a_i_(n - 1), где i = 0..n-1
+     2998:  171:        real s = 0;
+  2251498:  172:        for (int j = i + 1; j < n; j++) {
+     2998:  172-block  0
+  2251498:  172-block  1
+branch  0 taken 2248500
+branch  1 taken 2998 (fallthrough)
+  2248500:  173:            s += A_copy[i * n + j] * X[j];
+  2248500:  173-block  0
+        -:  174:        }
+        -:  175:
+     2998:  176:        X[i] = 1 / A_copy[i * n + i] * (B_copy[i] - s);
+     2998:  176-block  0
+        -:  177:    }
+        2:  178:}
+        -:  179:
+function _Z17Gauss_withLeadingPdS_iS_ called 1 returned 100% blocks executed 100%
+        1:  180:void Gauss_withLeading(real *A_copy, real *B_copy, int n, real *X) {
+        -:  181:
+        -:  182:    // Прямой ход с выбором ведущего, используя формулы на с.14
+     1500:  183:    for (int k = 0; k < n - 1; k++) {
+        1:  183-block  0
+     1499:  183-block  1
+     1500:  183-block  2
+branch  0 taken 1499
+branch  1 taken 1 (fallthrough)
+     1499:  184:        int rowOfLeading = findRowOfLeadingByCol(A_copy, n, k);
+     1499:  184-block  0
+call    0 returned 1499
+        -:  185:
+        -:  186:        // Перемещаем строку с ведущим на нужную позицию в матрице
+  2249999:  187:        for (int i = 0; i < n; i++) {
+  2249999:  187-block  0
+branch  0 taken 2248500
+branch  1 taken 1499 (fallthrough)
+  2248500:  188:            swap(A_copy[rowOfLeading * n + i], A_copy[k * n + i]);
+  2248500:  188-block  0
+call    0 returned 2248500
+        -:  189:        }
+     1499:  190:        swap(B_copy[rowOfLeading], B_copy[k]);
+     1499:  190-block  0
+call    0 returned 1499
+        -:  191:
+  1125749:  192:        for (int i = k + 1; i < n; i++) {
+  1124250:  192-block  0
+  1125749:  192-block  1
+branch  0 taken 1124250
+branch  1 taken 1499 (fallthrough)
+        -:  193:            // Находим l_ik = a_ik / a_kk
+  1124250:  194:            real l = A_copy[i * n + k] / A_copy[k * n + k];
+        -:  195:
+  1124250:  196:            B_copy[i] -= l * B_copy[k];
+1124999500:  197:            for (int j = k + 1; j < n; j++) {
+  1124250:  197-block  0
+1124999500:  197-block  1
+branch  0 taken 1123875250
+branch  1 taken 1124250 (fallthrough)
+1123875250:  198:                A_copy[i * n + j] -= l * A_copy[k * n + j];
+1123875250:  198-block  0
+        -:  199:            }
+        -:  200:        }
+        -:  201:    }
+        -:  202:
+        -:  203:    // Обратный ход
+        1:  204:    goInReverseOrder(A_copy, B_copy, X, n);
+        1:  204-block  0
+call    0 returned 1
+        1:  205:}
+        -:  206:
+function _Z20Gauss_withoutLeadingPdS_iS_ called 1 returned 100% blocks executed 100%
+        1:  207:void Gauss_withoutLeading(real *A_copy, real *B_copy, int n, real *X) {
+        -:  208:
+        -:  209:    // Прямой ход без выбора ведущего
+     1500:  210:    for (int k = 0; k < n - 1; k++) {
+        1:  210-block  0
+     1499:  210-block  1
+     1500:  210-block  2
+branch  0 taken 1499
+branch  1 taken 1 (fallthrough)
+  1125749:  211:        for (int i = k + 1; i < n; i++) {
+     1499:  211-block  0
+  1124250:  211-block  1
+  1125749:  211-block  2
+branch  0 taken 1124250
+branch  1 taken 1499 (fallthrough)
+        -:  212:            // Находим l_ik = a_ik / a_kk
+  1124250:  213:            real l = A_copy[i * n + k] / A_copy[k * n + k];
+        -:  214:
+  1124250:  215:            B_copy[i] -= l * B_copy[k];
+1124999500:  216:            for (int j = k + 1; j < n; j++) {
+  1124250:  216-block  0
+1124999500:  216-block  1
+branch  0 taken 1123875250
+branch  1 taken 1124250 (fallthrough)
+1123875250:  217:                A_copy[i * n + j] -= l * A_copy[k * n + j];
+1123875250:  217-block  0
+        -:  218:            }
+        -:  219:        }
+        -:  220:    }
+        -:  221:
+        -:  222:    // Обратный ход
+        1:  223:    goInReverseOrder(A_copy, B_copy, X, n);
+        1:  223-block  0
+call    0 returned 1
+        1:  224:}
+        -:  225:
+        -:  226:// Евклидова норма
+function _Z13EuclideanNormPdi called 9 returned 100% blocks executed 100%
+        9:  227:double EuclideanNorm(real *X, int n) {
+        9:  228:    real sum = 0;
+    13509:  229:    for (int i = 0; i < n; i++) {
+        9:  229-block  0
+    13509:  229-block  1
+branch  0 taken 13500
+branch  1 taken 9 (fallthrough)
+    13500:  230:        sum += pow(X[i], 2);
+    13500:  230-block  0
+call    0 returned 13500
+        -:  231:    }
+        9:  232:    return sqrt(sum);
+        9:  232-block  0
+        -:  233:}
+        -:  234:
+        -:  235:// относительная погрешность
+function _Z13RelativeErrordPdS_ called 3 returned 100% blocks executed 100%
+        3:  236:real *RelativeError(double relativeError, real *X, real *X_calculated) {
+        3:  237:    real *Distinction = new real[n];
+        3:  237-block  0
+call    0 returned 3
+     4503:  238:    for (int i = 0; i < n; i++) {
+     4503:  238-block  0
+branch  0 taken 4500
+branch  1 taken 3 (fallthrough)
+     4500:  239:        Distinction[i] = X[i] - X_calculated[i];
+     4500:  239-block  0
+        -:  240:    }
+        -:  241:
+        3:  242:    cout<<EuclideanNorm(X_calculated,n)<<"------"<<endl;
+        3:  242-block  0
+call    0 returned 3
+call    1 returned 3
+call    2 returned 3
+call    3 returned 3
+        3:  243:    relativeError = EuclideanNorm(Distinction, n) / EuclideanNorm(X, n);
+call    0 returned 3
+call    1 returned 3
+        3:  244:}
+        -:  245:
+function main called 1 returned 100% blocks executed 97%
+        1:  246:int main() {
+        1:  247:    FillMatrixSymmetrically(A, n, k);
+        1:  247-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  248:    FillX(X, n, m);
+        1:  248-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        -:  249:// Находим b=AX
+        1:  250:    MatrixMultiplication(B, A, n, n, X, n, 1);
+        1:  250-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        -:  251:
+        -:  252:    // Решаем по методу Гаусса с выбором ведущего_______________
+        -:  253:
+        1:  254:    real *X_withLeading = new real[n];// полученный X в методе Гаусса с выбором ведущего
+        1:  254-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        -:  255:
+        1:  256:    real *A_copy = new real[n * n];
+        1:  256-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+  2250001:  257:    for (int i = 0; i < n * n; i++) {
+        1:  257-block  0
+  2250001:  257-block  1
+branch  0 taken 2250000
+branch  1 taken 1 (fallthrough)
+  2250000:  258:        A_copy[i] = A[i];
+  2250000:  258-block  0
+        -:  259:    }
+        -:  260:
+        1:  261:    real *B_copy = new real[n];
+        1:  261-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+     1501:  262:    for (int i = 0; i < n; i++) {
+        1:  262-block  0
+     1501:  262-block  1
+branch  0 taken 1500
+branch  1 taken 1 (fallthrough)
+     1500:  263:        B_copy[i] = B[i];
+     1500:  263-block  0
+        -:  264:    }
+        -:  265:    //расставили границы для времени
+        1:  266:    auto start_Gauss_withLeading = chrono::high_resolution_clock::now();
+        1:  266-block  0
+call    0 returned 1
+        1:  267:    Gauss_withLeading(A_copy, B_copy, n, X_withLeading);
+call    0 returned 1
+        1:  268:    auto end_Gauss_withLeading = chrono::high_resolution_clock::now();
+call    0 returned 1
+        1:  269:    int time_Gauss_withLeading = chrono::duration_cast<chrono::milliseconds>(
+        1:  269-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        2:  270:            end_Gauss_withLeading - start_Gauss_withLeading).count();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  270-block  0
+call    3 returned 1
+    $$$$$:  270-block  1
+        -:  271:    // Конец решения по методу Гаусса с выбором ведущего______________
+        -:  272:
+        -:  273:
+        -:  274:    // Решаем по методу Гаусса без выбора ведущего____________________
+        -:  275:
+        1:  276:    real *X_withoutLeading = new real[n];// полученный X в методе Гаусса(без выбора ведущего)
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+  2250001:  277:    for (int i = 0; i < n * n; i++) {
+        1:  277-block  0
+  2250001:  277-block  1
+branch  0 taken 2250000
+branch  1 taken 1 (fallthrough)
+  2250000:  278:        A_copy[i] = A[i];
+  2250000:  278-block  0
+        -:  279:    }
+        -:  280:
+     1501:  281:    for (int i = 0; i < n; i++) {
+        1:  281-block  0
+     1501:  281-block  1
+branch  0 taken 1500
+branch  1 taken 1 (fallthrough)
+     1500:  282:        B_copy[i] = B[i];
+     1500:  282-block  0
+        -:  283:    }
+        -:  284:    //расставили границы для времени
+        1:  285:    auto start_Gauss_withoutLeading = chrono::high_resolution_clock::now();
+        1:  285-block  0
+call    0 returned 1
+        1:  286:    Gauss_withoutLeading(A_copy, B_copy, n, X_withoutLeading);
+call    0 returned 1
+        1:  287:    auto end_Gauss_withoutLeading = chrono::high_resolution_clock::now();
+call    0 returned 1
+        1:  288:    int time_Gauss_withoutLeading = chrono::duration_cast<chrono::milliseconds>(
+        1:  288-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        2:  289:            end_Gauss_withoutLeading - start_Gauss_withoutLeading).count();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  289-block  0
+call    3 returned 1
+    $$$$$:  289-block  1
+        -:  290:    // Конец решения по методу Гаусса без выбора ведущего_____________
+        -:  291:
+        -:  292:    // Решаем по методу LDLt_____________________________________
+        -:  293:
+        1:  294:    real *Y = new real[n];
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  295:    real *Z = new real[n];
+        1:  295-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  296:    real *Slay_X = new real[n];// полученный X в LDLt
+        1:  296-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        -:  297:    //расставили границы для времени
+        1:  298:    auto start_LDLt = chrono::high_resolution_clock::now();
+        1:  298-block  0
+call    0 returned 1
+        1:  299:    A_to_LDLt(A, n);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  300:    FillY(Y, A, B, n);
+        1:  300-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  301:    FillZ(Z, Y, A, n);
+        1:  301-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  302:    FillX_find(Slay_X, A, Z, n);
+        1:  302-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  303:    auto end_LDLt = chrono::high_resolution_clock::now();
+        1:  303-block  0
+call    0 returned 1
+        1:  304:    int time_LDLt = chrono::duration_cast<chrono::milliseconds>(end_LDLt - start_LDLt).count();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  304-block  0
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:  304-block  1
+call    6 returned 1
+    $$$$$:  304-block  2
+        -:  305:    // Конец решения по методу LDLt_____________________________
+        -:  306:
+        -:  307:    // Найдем относительные погрешности_____________________________
+        -:  308:    double RelativeError_Gauss_withLeading;
+        1:  309:    RelativeError(RelativeError_Gauss_withLeading, X, X_withLeading);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        -:  310:
+        -:  311:    double RelativeError_Gauss_withoutLeading;
+        1:  312:    RelativeError(RelativeError_Gauss_withoutLeading, X, X_withoutLeading);
+        1:  312-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        -:  313:
+        -:  314:    double RelativeError_LDLt;
+        1:  315:    RelativeError(RelativeError_LDLt, X, Slay_X);
+        1:  315-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        -:  316:    //_______________________________________________________________
+        1:  317:    cout << "X: ";
+        1:  317-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        6:  318:    for (int i = 0; i < 5; i++) {
+        1:  318-block  0
+        5:  318-block  1
+        6:  318-block  2
+branch  0 taken 5
+branch  1 taken 1 (fallthrough)
+        5:  319:        cout << X[i] << ", ";
+        5:  319-block  0
+call    0 returned 5
+branch  1 taken 5 (fallthrough)
+branch  2 taken 0 (throw)
+        5:  319-block  1
+call    3 returned 5
+branch  4 taken 5 (fallthrough)
+branch  5 taken 0 (throw)
+        -:  320:    }
+        1:  321:    cout << endl << endl;
+        1:  321-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  321-block  1
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        -:  322:    // Вывод ответа в формате:
+        -:  323:    //1. Первые 5 координат вектора приближённого решения x*.
+        -:  324:    //2. Относительная погрешность
+        -:  325:    //3. Время выполнения (можно приблизительно).
+        -:  326:
+        -:  327:
+        1:  328:    cout << "The first 5 coordinates of the approximate solution vector x*:" << endl;
+        1:  328-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  328-block  1
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        6:  329:    for (int i = 0; i < 5; i++) {
+        1:  329-block  0
+        5:  329-block  1
+        6:  329-block  2
+branch  0 taken 5
+branch  1 taken 1 (fallthrough)
+        5:  330:        cout << X_withLeading[i] << ", ";
+        5:  330-block  0
+call    0 returned 5
+branch  1 taken 5 (fallthrough)
+branch  2 taken 0 (throw)
+        5:  330-block  1
+call    3 returned 5
+branch  4 taken 5 (fallthrough)
+branch  5 taken 0 (throw)
+        -:  331:    }
+        1:  332:    cout << "    Gauss with leading" << endl;
+        1:  332-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  332-block  1
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        6:  333:    for (int i = 0; i < 5; i++) {
+        1:  333-block  0
+        5:  333-block  1
+        6:  333-block  2
+branch  0 taken 5
+branch  1 taken 1 (fallthrough)
+        5:  334:        cout << X_withLeading[i] << ", ";
+        5:  334-block  0
+call    0 returned 5
+branch  1 taken 5 (fallthrough)
+branch  2 taken 0 (throw)
+        5:  334-block  1
+call    3 returned 5
+branch  4 taken 5 (fallthrough)
+branch  5 taken 0 (throw)
+        -:  335:    }
+        1:  336:    cout << "    Gauss without leading" << endl;
+        1:  336-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  336-block  1
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        6:  337:    for (int i = 0; i < 5; i++) {
+        1:  337-block  0
+        5:  337-block  1
+        6:  337-block  2
+branch  0 taken 5
+branch  1 taken 1 (fallthrough)
+        5:  338:        cout << Slay_X[i] << ", ";
+        5:  338-block  0
+call    0 returned 5
+branch  1 taken 5 (fallthrough)
+branch  2 taken 0 (throw)
+        5:  338-block  1
+call    3 returned 5
+branch  4 taken 5 (fallthrough)
+branch  5 taken 0 (throw)
+        -:  339:    }
+        1:  340:    cout << "    LDLt" << endl;
+        1:  340-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  340-block  1
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:  341:    cout << endl;
+        1:  341-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  342:    cout << "Relative error:" << endl;
+        1:  342-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  342-block  1
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:  343:    cout << RelativeError_Gauss_withLeading << "    Gauss with leading" << endl;
+        1:  343-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  343-block  1
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:  343-block  2
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+        1:  344:    cout << RelativeError_Gauss_withoutLeading << "    Gauss without leading" << endl;
+        1:  344-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  344-block  1
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:  344-block  2
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+        1:  345:    cout << RelativeError_LDLt << "    LDLt" << endl;
+        1:  345-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  345-block  1
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:  345-block  2
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+        1:  346:    cout << endl;
+        1:  346-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  347:    cout << "Time:" << endl;
+        1:  347-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  347-block  1
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:  348:    cout << time_Gauss_withLeading << "    Gauss with leading" << endl;
+        1:  348-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  348-block  1
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:  348-block  2
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+        1:  349:    cout << time_Gauss_withoutLeading << "    Gauss without leading" << endl;
+        1:  349-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  349-block  1
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:  349-block  2
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+        1:  350:    cout << time_LDLt << "    LDLt" << endl;
+        1:  350-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  350-block  1
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:  350-block  2
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+        -:  351:
+        -:  352:
+        1:  353:}
+        1:  353-block  0
+        1:  353-block  1
+        -:  354:
